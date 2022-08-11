@@ -5,13 +5,17 @@
 //  Created by t&a on 2022/07/25.
 //
 
+
+// ListLocationView  フィルタリング時
+// InputLocationView ロケーション登録時
+
 import SwiftUI
 
 struct SpotPickerView: View {
     // NavigationViewを閉じるメソッド
     @Environment(\.dismiss) var dismiss
     
-    @Binding var selectedSpot:Spot
+    @Binding var selectedSpot:Spot?  // 選択されたSpot 未選択 = nil
     
     var body: some View {
         
@@ -38,7 +42,7 @@ struct SpotPickerView: View {
                         dismiss()
                     },label: {
                         Image(systemName:"arrow.backward")
-                    }).foregroundColor(selectedSpot.spotColor)
+                    }).foregroundColor(selectedSpot?.spotColor ?? Color("ThemaColor"))
                 })
                 
             }

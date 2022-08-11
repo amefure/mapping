@@ -31,7 +31,7 @@ struct InputLocationView: View {
     @State var address:String = ""  // 住所
     @State var name:String = ""     // 名称
     @State var memo:String = ""     // メモ
-    @State var selectedSpot:Spot = Spot.restaurant // Spot
+    @State var selectedSpot:Spot? = Spot.restaurant // Spot フィルター機能にnilを許容するため「?」付与
     
     @State var isAlert:Bool = false     // 新規登録/更新処理を実行したアラート
     @State var hasInput:Bool = false    // 登録/更新ボタン押下時にInputに値があるかどうか
@@ -68,10 +68,10 @@ struct InputLocationView: View {
     // バリデーション
     func validationInput() -> Bool{
         if(address.isEmpty || name.isEmpty){
-            hasInput = true // 住所したメッセージ表示用
+            hasInput = true // 住所下メッセージ表示用
             return false
         }else{
-            hasInput = false // 住所したメッセージ表示用
+            hasInput = false // 住所下メッセージ表示用
             return true
         }
     }
@@ -85,7 +85,7 @@ struct InputLocationView: View {
                         TextField("住所", text: $address).padding(.top)
                         // 下線を表示
                         Rectangle()
-                            .foregroundColor(selectedSpot.spotColor)
+                            .foregroundColor(selectedSpot!.spotColor)
                             .frame(height: 2)
                         
                         if (!hasInput){
@@ -103,7 +103,7 @@ struct InputLocationView: View {
                     VStack {
                         TextField("名称", text: $name)
                         Rectangle()
-                            .foregroundColor(selectedSpot.spotColor)
+                            .foregroundColor(selectedSpot!.spotColor)
                             .frame(height: 2)
                     }.padding(.vertical)
                     
@@ -112,7 +112,7 @@ struct InputLocationView: View {
                         Image(systemName: "text.justify.left")
                         Text("MEMO")
                         Spacer()
-                    } .foregroundColor(selectedSpot.spotColor)
+                    } .foregroundColor(selectedSpot!.spotColor)
                     
                     TextEditor(text: $memo)
                         .padding() // Editorの中の余白
@@ -127,8 +127,8 @@ struct InputLocationView: View {
                     SpotPickerView(selectedSpot: $selectedSpot)
                 } label: {
                     // アクセントカラーで色変更されている
-                    Image(systemName:selectedSpot.spotImage)
-                    Text(selectedSpot.rawValue)
+                    Image(systemName:selectedSpot!.spotImage )
+                    Text(selectedSpot!.rawValue )
                     Spacer()
                     Image(systemName:"chevron.right").foregroundColor(.gray)
                     
@@ -139,7 +139,7 @@ struct InputLocationView: View {
                 
             } // VStack
             .navigationBarTitleDisplayMode(.inline)
-            .accentColor(selectedSpot.spotColor) // NavigationView
+            .accentColor(selectedSpot!.spotColor) // NavigationView
             .navigationBarBackButtonHidden(true)
             .padding()
             .onAppear(perform: {
@@ -155,16 +155,14 @@ struct InputLocationView: View {
                         isModal = false
                     },label: {
                         Image(systemName:"arrow.backward")
-                    }).foregroundColor(selectedSpot.spotColor)
+                    }).foregroundColor(selectedSpot!.spotColor)
                 })
                 // 戻るボタン--------------------------------------------
                 
                 // 登録ボタン--------------------------------------------
                 ToolbarItem(placement: .navigationBarTrailing, content: {
                     
-                    Button(action: {
-                        
-                        
+                    Button(action: {                        
                         if (validationInput()){
                             // ジオコーディングメソッド呼び出し
                             locationManager.geocode(addressKey:address) { location in
@@ -175,7 +173,7 @@ struct InputLocationView: View {
                                 let data =  Location(address: address,
                                                      name: name,
                                                      memo: memo,
-                                                     spot: selectedSpot,
+                                                     spot: selectedSpot!,
                                                      latitude: location.latitude,
                                                      longitude: location.longitude)
                                 if(hasLocation){
@@ -190,12 +188,12 @@ struct InputLocationView: View {
                                     allLocation.setAllData() // 共有クラスを更新
                                     isModal = false // 新規登録の際はそのまま閉じる
                                 }
-                            }
-                        }
+                            } // locationManager.geocode
+                        } // if (validationInput()
                         
                     }, label: {
                         Image(systemName: "goforward.plus")
-                            .foregroundColor(selectedSpot.spotColor)
+                            .foregroundColor(selectedSpot!.spotColor)
                     })
                     .alert(isPresented: $isAlert){
                         Alert(title:Text("更新処理"),

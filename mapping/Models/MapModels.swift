@@ -13,46 +13,43 @@ class LocationManager: NSObject, ObservableObject, CLLocationManagerDelegate {
     let manager = CLLocationManager()
     let geocoder = CLGeocoder()
     // 領域の更新をパブリッシュする
-    @Published var region =  MKCoordinateRegion()
+    @Published var region = MKCoordinateRegion()
     
     @Published var address:String? = ""
-
-    override init() {
-           super.init() // スーパクラスのイニシャライザを実行
-           manager.delegate = self // 自身をデリゲートプロパティに設定
-           manager.requestWhenInUseAuthorization() // 位置情報を利用許可をリクエスト
-           manager.desiredAccuracy = kCLLocationAccuracyBest // 最高精度の位置情報を要求
-           manager.distanceFilter = 3.0 // 更新距離(m)
-           manager.startUpdatingLocation()
-       }
     
-    // 領域の更新（デリゲートメソッド）
-    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+    override init() {
+        super.init() // スーパクラスのイニシャライザを実行
+        manager.delegate = self // 自身をデリゲートプロパティに設定
+        manager.requestWhenInUseAuthorization() // 位置情報を利用許可をリクエスト
+        manager.desiredAccuracy = kCLLocationAccuracyBest // 最高精度の位置情報を要求
+        manager.distanceFilter = 3.0 // 更新距離(m)
+        manager.startUpdatingLocation()
+        self.reloadRegion()
         
-        locations.last.map {
+    }
+    
+    func reloadRegion (){
+        
+        if let location = manager.location {
             
-                    
-                    //逆ジオコーディング 座標→住所
-                    geocoder.reverseGeocodeLocation( $0, completionHandler: { ( placemarks, error ) in
-                        if let placemark = placemarks?.first {
-                            //住所
-                            let administrativeArea = placemark.administrativeArea == nil ? "" : placemark.administrativeArea!
-                            let locality = placemark.locality == nil ? "" : placemark.locality!
-                            let subLocality = placemark.subLocality == nil ? "" : placemark.subLocality!
-                            let thoroughfare = placemark.thoroughfare == nil ? "" : placemark.thoroughfare!
-                            let subThoroughfare = placemark.subThoroughfare == nil ? "" : placemark.subThoroughfare!
-                            let placeName = !thoroughfare.contains( subLocality ) ? subLocality : thoroughfare
-                            self.address = administrativeArea + locality + placeName + subThoroughfare
-
-                        }
-                    } )
+            geocoder.reverseGeocodeLocation( location, completionHandler: { ( placemarks, error ) in
                 
+                if let placemark = placemarks?.first {
+                    //住所
+                    let administrativeArea = placemark.administrativeArea == nil ? "" : placemark.administrativeArea!
+                    let locality = placemark.locality == nil ? "" : placemark.locality!
+                    let subLocality = placemark.subLocality == nil ? "" : placemark.subLocality!
+                    let thoroughfare = placemark.thoroughfare == nil ? "" : placemark.thoroughfare!
+                    let subThoroughfare = placemark.subThoroughfare == nil ? "" : placemark.subThoroughfare!
+                    let placeName = !thoroughfare.contains( subLocality ) ? subLocality : thoroughfare
+                    self.address = administrativeArea + locality + placeName + subThoroughfare
+                }
+            })
             
             let center = CLLocationCoordinate2D(
-                latitude: $0.coordinate.latitude,
-                longitude: $0.coordinate.longitude)
-        
-            // 領域の更新
+                latitude: location.coordinate.latitude,
+                longitude: location.coordinate.longitude)
+            
             region = MKCoordinateRegion(
                 center: center,
                 latitudinalMeters: 1000.0,
@@ -62,7 +59,23 @@ class LocationManager: NSObject, ObservableObject, CLLocationManagerDelegate {
     }
     
     
-    // ジオコーディング　住所 → 座標
+    // 位置情報が拒否された場合に初期表示位置を構築：東京スカイツリーの場所
+    func locationManagerDidChangeAuthorization(_ manager: CLLocationManager){
+        let guarded = manager.authorizationStatus.rawValue
+        if guarded == 2 {
+            let center = CLLocationCoordinate2D(
+                latitude: 35.709152712026265,
+                longitude: 139.80771829999996)
+            
+            region = MKCoordinateRegion(
+                center: center,
+                latitudinalMeters: 1000.0,
+                longitudinalMeters: 1000.0
+            )
+        }
+    }
+    
+    // ジオコーディング　住所 → 座標 InputViewの住所チェック
     func geocode(addressKey:String,completionHandler: @escaping (CLLocationCoordinate2D?) -> Void){
         
         geocoder.geocodeAddressString(addressKey) { (placemarks, error) in
@@ -92,7 +105,6 @@ class MessageBalloon:ObservableObject{
     @Published  var isPreview:Bool = false
     
     private var timer = Timer()
-
     
     // Double型にキャスト＆opacityモディファイア用の数値に割り算
     func castOpacity() -> Double{

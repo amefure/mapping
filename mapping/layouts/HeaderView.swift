@@ -10,38 +10,61 @@ import SwiftUI
 struct HeaderView: View {
     // 共有されたAllLocationクラス
     @EnvironmentObject var allLocation : AllLocation
+    
     // JSONファイル操作クラス
     var fileController = FileController()
     
-    @State var isModal:Bool = false    // InputLocationView表示/非表示
-    @State var isAlert:Bool = false    // 全データ削除ボタンの確認アラート
+    @State var isModal:Bool = false      // InputLocationView表示/非表示
+    @State var isModalSpot:Bool = false  // InputLocationView表示/非表示
+    @State var isLimitAlert:Bool = false // 上限に達した場合のアラート
     
+    @Binding var selectedSpot:Spot?   // 選択されたSpot
+    @Binding var selectedTag:Int      // 現在選択されているタグを共有
+    @Binding var filter:Bool          // フィルターのON/OFF
+    @Binding var isClick:Bool         // ヘッダー左端ボタンを押されたかどうかFilter/Map
+    
+    func limitCountData() -> Bool{
+        if allLocation.countAllData() < fileController.loadLimitTxt() {
+            // 現在の要素数 < 上限数
+            return true
+        }else{
+            // 上限に達した場合
+            isLimitAlert = true
+            // 現在の要素数 = 上限数
+            return false
+        }
+    }
     
     var body: some View {
         HStack{
-            // 左端_の全データ削除ボタン-----------------------------
-            Button(action: {
-                isAlert = true
-                
-            }, label: {
-                VStack {
-                    Image(systemName: "trash.fill")
-                        .padding(.top,8)
-                    Text("削除")
-                        .padding(1)
-                        .font(.caption)
-                }.foregroundColor(.white)
-                
-            })
-            .alert(isPresented: $isAlert){
-                Alert(title:Text("確認"),
-                      message: Text("全てのデータを削除してもよろしいですか？"),
-                      primaryButton: .destructive(Text("削除する"),
-                      action: {
-                        fileController.clearFile()
-                        allLocation.setAllData()
-                }), secondaryButton: .cancel(Text("キャンセル")))
-            }
+            // 左端の全データ削除ボタン-----------------------------
+            Group{
+                    if(selectedTag == 1){ // フィルタリングボタン
+                        Button(action: {
+                            if(filter == false){
+                                isClick.toggle()
+                            }else{
+                                selectedSpot = nil
+                            }
+                            filter.toggle()
+                        }, label: {
+                            Image(systemName:"line.3.horizontal.decrease.circle")
+                                .padding(.top,8)
+                                .font(.system(size:25))
+                        }).foregroundColor(filter ? .orange : .white)
+                        
+                    }else{  // 更新ボタン
+                       
+                        Button(action: {
+                            isClick.toggle()
+                        }, label: {
+                            Image(systemName: "gobackward")
+                                .padding(.top,8)
+                                .font(.system(size:22))
+                        })
+                        
+                    }
+            }.frame(width: 25, height: 25).foregroundColor(.white)
             // 左端の全データ削除ボタン-----------------------------
             
             Spacer()
@@ -50,20 +73,21 @@ struct HeaderView: View {
             
             Spacer()
             
-
-            
             // 右端の新規登録ボタン-----------------------------
             Button(action: {
-                isModal = true
+                
+                if limitCountData(){
+                    isModal = true
+                }else{
+                    isLimitAlert = true
+                }
+                
             }, label: {
                 VStack {
-                    Image(systemName: "signpost.right.fill")
+                    Image(systemName: "plus.circle")
+                        .font(.system(size:25))
                         .padding(.top,8)
-                    Text("登録")
-                        .padding(1)
-                        .font(.caption)
-                    
-                }.foregroundColor(.white)
+                }.foregroundColor(Color("ThemaColor"))
             })
             // 右端の新規登録ボタン-----------------------------
             
@@ -74,11 +98,16 @@ struct HeaderView: View {
                 // parentUpdateItemFunctionには空のメソッドを渡す
                 InputLocationView(isModal: $isModal,parentUpdateItemFunction: { data in }).environmentObject(allLocation)
             })
+            .alert(isPresented: $isLimitAlert){
+                Alert(title:Text("上限に達しました"),
+                      message: Text("広告を見てSpotの枠を増やしてください。"),
+                      dismissButton: .default(Text("OK")))
+            }
     }
 }
 
 struct HeaderView_Previews: PreviewProvider {
     static var previews: some View {
-        HeaderView()
+        HeaderView(selectedSpot: Binding.constant(.house), selectedTag: Binding.constant(1),filter:Binding.constant(false),isClick: Binding.constant(false))
     }
 }

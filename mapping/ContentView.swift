@@ -13,14 +13,24 @@ import MapKit
 // ContentView > MappingView
 // ContentView > CurrentMapView
 
- // #E46977
+// #E46977
 
 struct ContentView: View {
-    // TabViewのセレクトタグ
-    @State  var selectedTag = 1
     
     // 全ビューのデータの根源となるクラス
     @ObservedObject var allLocation = AllLocation()
+    
+    @ObservedObject var locationManager = LocationManager()
+    
+    // TabViewのセレクトタグ
+    @State var selectedTag = 1
+    
+    // フィルタリング用Spot ListLocationView用
+    @State var selectedSpot:Spot? = nil
+    // フィルターのON/OFF  ListLocationView用
+    @State var filter:Bool = false
+    // Headerボタンが押されたか ListLocationView用
+    @State var isClick:Bool = false
     
     
     init() {
@@ -28,38 +38,47 @@ struct ContentView: View {
         UITabBar.appearance().unselectedItemTintColor = .white
         // TabView背景色
         UITabBar.appearance().backgroundColor = UIColor(displayP3Red:  0.4, green: 0.4, blue: 0.4, alpha: 1)
+        UITableView.appearance().backgroundColor = .clear
     }
-    
- 
     
     var body: some View {
         
         // 全てのViewでのヘッダー
         VStack (spacing: 0){
-            HeaderView().environmentObject(allLocation)
-        TabView(selection: $selectedTag) {
             
-            // 1.リスト表示View
-            ListLocationView().tabItem({
-                Image(systemName: "list.bullet")
-                Text("リスト")}).tag(1).environmentObject(allLocation)
-            // -----------------------------------------------------
+            HeaderView(selectedSpot:$selectedSpot, selectedTag: $selectedTag,filter: $filter,isClick: $isClick).environmentObject(allLocation)
             
-            // 2.アノテーション配置View
-            MappingView().tabItem({
-                Image(systemName: "globe.asia.australia.fill")
-                Text("Map")}).tag(2).environmentObject(allLocation)
-            // -----------------------------------------------------
-            
-            // 3.現在地を表示するView
-            CurrentMapView().tabItem({
-                Image(systemName: "figure.wave.circle")
-                Text("現在地")
-            }).tag(3)
-            // -----------------------------------------------------
-        } // TabView
+            TabView(selection: $selectedTag) {
+                
+                // 1.リスト表示View
+                ListLocationView(selectedSpot: $selectedSpot,filter: $filter,isClick: $isClick).tabItem({
+                    Image(systemName: "list.bullet")
+                    Text("リスト")}).tag(1).environmentObject(allLocation)
+                // -----------------------------------------------------
+                
+                // 2.アノテーション配置View
+                MappingView(isClick: $isClick).tabItem({
+                    Image(systemName: "globe.asia.australia.fill")
+                    Text("Map")}).tag(2).environmentObject(allLocation)
+                // -----------------------------------------------------
+                
+                // 3.現在地を表示するView
+                CurrentMapView(isClick: $isClick).tabItem({
+                    Image(systemName: "figure.wave.circle")
+                    Text("現在地")
+                }).tag(3)
+                // -----------------------------------------------------
+                
+                // 4.設定を操作するView
+                SettingView().tabItem({
+                    Image(systemName: "gearshape")
+                    Text("設定")
+                }).tag(4).environmentObject(allLocation)
+                // -----------------------------------------------------
+                
+            } // TabView
             .accentColor(Color("ThemaColor"))
-
+            
         }
         
     }

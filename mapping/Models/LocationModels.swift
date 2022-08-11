@@ -40,8 +40,8 @@ enum Spot:String,  Codable ,Identifiable ,CaseIterable{
     case house = "家"         // 人の家
     case restaurant = "飲食店" // 飲食店
     case shop = "ショップ"     // ショップ
-    case workplace  = "仕事場" // 仕事場
     case facility = "施設"    // 施設
+    case workplace  = "仕事場" // 仕事場
     case leisure = "レジャー"  // レジャー
     case nature = "自然"      // 自然
     case parking = "駐車場"   // 駐車場
@@ -50,40 +50,40 @@ enum Spot:String,  Codable ,Identifiable ,CaseIterable{
     var spotColor: Color{
         switch self {
         case .house:
-            // Lava : 赤
-            return Color( red: 202/255, green: 25/255, blue: 28/255, opacity: 1)
+            // Giant's Club : 赤
+            return Color( red: 182/255, green: 95/255, blue: 77/255, opacity: 1)
         case .restaurant:
             // Metallic Orange : 橙
             return Color( red: 232/255, green: 106/255, blue: 15/255, opacity: 1)
         case .shop:
-            // American Yellow
-            return Color( red: 248/255, green: 181/255, blue: 3/255, opacity: 1)
-        case .workplace:
-            // Honolulu Blue : 青色
-            return Color( red: 0/255, green: 93/255, blue: 185/255, opacity: 1)
+            // Crayola's Maize
+            return Color( red: 244/255, green: 192/255, blue: 91/255, opacity: 1)
         case .facility:
-            // Silver Chalice : グレー
-            return Color( red: 176/255, green: 173/255, blue: 163/255, opacity: 1)
+            // : 茶色
+            return Color( red:182/255, green: 134/255, blue: 77/255, opacity: 1)
+        case .workplace:
+            //  Independence : 青色
+            return Color( red: 67/255, green: 76/255, blue: 109/255, opacity: 1)
         case .leisure:
-            // Cadmium Violet : 紫
-            return Color( red: 132/255, green: 65/255, blue: 171/255, opacity: 1)
+            // : 紫
+            return Color( red: 161/255, green: 77/255, blue: 182/255, opacity: 1)
         case .nature:
             // Slimy Green : 緑
-            return Color( red: 61/255, green: 149/255, blue: 25/255, opacity: 1)
+            return Color( red: 79/255, green: 182/255, blue: 77/255, opacity: 1)
         case .parking:
-            // Teal Blue : 水色
-            return Color( red: 49/255, green: 137/255, blue: 150/255, opacity: 1)
+            // Green Sheen : 水色
+            return Color( red: 110/255, green: 168/255, blue: 158/255, opacity: 1)
         case .others:
-            // Puce208, 143, 159)
-            return Color( red: 208/255, green: 143/255, blue: 159/255, opacity: 1)
+            // : 薄ピンク
+            return Color( red: 182/255, green: 77/255, blue: 134/255, opacity: 1)
         }
         
     }
     
     var accentColor: Color {
         switch self {
-        case .house,.restaurant,.workplace, .shop, .leisure,.nature,.parking,.others : return .white
-        case  .facility : return .black
+        case .house,.restaurant,.workplace,.facility, .leisure,.nature,.parking,.others : return .white
+        case  .shop : return .black
         }
        }
     
@@ -96,10 +96,10 @@ enum Spot:String,  Codable ,Identifiable ,CaseIterable{
             return "fork.knife"
         case .shop:
             return "tshirt"
-        case .workplace:
-            return "display"
         case .facility:
             return "building"
+        case .workplace:
+            return "display"
         case .leisure:
             return "person.3"
         case .nature:
@@ -124,6 +124,11 @@ class AllLocation:ObservableObject{
     init(){
         // インスタンス化時にプロパティにデータを格納
         self.setAllData()
+    }
+    
+    // 現在のLocation情報数をカウント
+    func countAllData() -> Int{
+        return self.allData.count
     }
 
     // 現在のJSONファイルの値をクラスのプロパティにセット
