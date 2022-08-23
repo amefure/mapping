@@ -129,6 +129,7 @@ struct CurrentMapView: View {
                 setAnnotation()
             }
         } // NavigationView
+        .navigationViewStyle(.stack)
     }
 }
 

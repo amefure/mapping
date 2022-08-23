@@ -10,10 +10,13 @@ import Foundation
 import UIKit
 import GoogleMobileAds // 忘れずに
 
+
+
 struct AdMobBannerView: UIViewRepresentable {
     func makeUIView(context: Context) -> GADBannerView {
         let banner = GADBannerView(adSize: GADAdSizeBanner) // インスタンスを生成
         // 諸々の設定をしていく
+ 
         banner.adUnitID = "ca-app-pub-3940256099942544/2934735716" // 自身の広告IDに置き換える
         let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene
         banner.rootViewController = windowScene?.windows.first!.rootViewController
@@ -39,6 +42,7 @@ class Reward: NSObject, ObservableObject ,GADFullScreenContentDelegate {
 
     // リワード広告の読み込み
     func loadReward() {
+        
         GADRewardedAd.load(withAdUnitID: "ca-app-pub-3940256099942544/1712485313", request: GADRequest(),completionHandler: { (ad, error) in             if let _ = error {
                 // 読み込みに失敗しました
                 self.rewardLoaded = false

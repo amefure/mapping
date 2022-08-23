@@ -30,7 +30,9 @@ struct ContentView: View {
     // フィルターのON/OFF  ListLocationView用
     @State var filter:Bool = false
     // Headerボタンが押されたか ListLocationView用
-    @State var isClick:Bool = false
+    @State var isClickFilter:Bool = false
+    // Headerボタンが押されたか Map更新用
+    @State var isClickUpdate:Bool = false
     
     
     init() {
@@ -46,24 +48,24 @@ struct ContentView: View {
         // 全てのViewでのヘッダー
         VStack (spacing: 0){
             
-            HeaderView(selectedSpot:$selectedSpot, selectedTag: $selectedTag,filter: $filter,isClick: $isClick).environmentObject(allLocation)
+            HeaderView(selectedSpot:$selectedSpot, selectedTag: $selectedTag,filter: $filter,isClickFilter: $isClickFilter,isClickUpdate: $isClickUpdate).environmentObject(allLocation)
             
             TabView(selection: $selectedTag) {
                 
                 // 1.リスト表示View
-                ListLocationView(selectedSpot: $selectedSpot,filter: $filter,isClick: $isClick).tabItem({
+                ListLocationView(selectedSpot: $selectedSpot,filter: $filter,isClick: $isClickFilter).tabItem({
                     Image(systemName: "list.bullet")
                     Text("リスト")}).tag(1).environmentObject(allLocation)
                 // -----------------------------------------------------
                 
                 // 2.アノテーション配置View
-                MappingView(isClick: $isClick).tabItem({
+                MappingView(isClick: $isClickUpdate).tabItem({
                     Image(systemName: "globe.asia.australia.fill")
                     Text("Map")}).tag(2).environmentObject(allLocation)
                 // -----------------------------------------------------
                 
                 // 3.現在地を表示するView
-                CurrentMapView(isClick: $isClick).tabItem({
+                CurrentMapView(isClick: $isClickUpdate).tabItem({
                     Image(systemName: "figure.wave.circle")
                     Text("現在地")
                 }).tag(3)

@@ -21,7 +21,9 @@ struct HeaderView: View {
     @Binding var selectedSpot:Spot?   // 選択されたSpot
     @Binding var selectedTag:Int      // 現在選択されているタグを共有
     @Binding var filter:Bool          // フィルターのON/OFF
-    @Binding var isClick:Bool         // ヘッダー左端ボタンを押されたかどうかFilter/Map
+    @Binding var isClickFilter:Bool         // ヘッダー左端ボタンを押されたかどうか：Filter
+    @Binding var isClickUpdate:Bool         // ヘッダー左端ボタンを押されたかどうか：Map
+
     
     func limitCountData() -> Bool{
         if allLocation.countAllData() < fileController.loadLimitTxt() {
@@ -42,7 +44,7 @@ struct HeaderView: View {
                     if(selectedTag == 1){ // フィルタリングボタン
                         Button(action: {
                             if(filter == false){
-                                isClick.toggle()
+                                isClickFilter.toggle()
                             }else{
                                 selectedSpot = nil
                             }
@@ -56,7 +58,7 @@ struct HeaderView: View {
                     }else{  // 更新ボタン
                        
                         Button(action: {
-                            isClick.toggle()
+                            isClickUpdate.toggle()
                         }, label: {
                             Image(systemName: "gobackward")
                                 .padding(.top,8)
@@ -108,6 +110,6 @@ struct HeaderView: View {
 
 struct HeaderView_Previews: PreviewProvider {
     static var previews: some View {
-        HeaderView(selectedSpot: Binding.constant(.house), selectedTag: Binding.constant(1),filter:Binding.constant(false),isClick: Binding.constant(false))
+        HeaderView(selectedSpot: Binding.constant(.house), selectedTag: Binding.constant(1),filter:Binding.constant(false),isClickFilter: Binding.constant(false),isClickUpdate: Binding.constant(false))
     }
 }

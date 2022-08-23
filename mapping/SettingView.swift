@@ -26,6 +26,14 @@ struct SettingView: View {
     func shareApp(shareText: String, shareImage: Image, shareLink: String) {
         let items = [shareText, shareImage, URL(string: shareLink)!] as [Any]
         let activityVC = UIActivityViewController(activityItems: items, applicationActivities: nil)
+        if UIDevice.current.userInterfaceIdiom == .pad {
+            let deviceSize = UIScreen.main.bounds
+            if let popPC = activityVC.popoverPresentationController {
+                    popPC.sourceView = activityVC.view
+                    popPC.barButtonItem = .none
+                    popPC.sourceRect = CGRect(x:deviceSize.size.width/2, y: deviceSize.size.height, width: 0, height: 0)
+            }
+        }
         let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene
         let rootVC = windowScene?.windows.first?.rootViewController
         rootVC?.present(activityVC, animated: true,completion: {})
@@ -68,7 +76,7 @@ struct SettingView: View {
                 
                 // 3:シェアボタン
                 Button(action: {
-                    shareApp(shareText: "mappingというアプリを使ってみてね♪", shareImage: Image(systemName: "globe.asia.australia"), shareLink: "https://tech.amefure.com/")
+                    shareApp(shareText: "mappingというアプリを使ってみてね♪", shareImage: Image(systemName: "globe.asia.australia"), shareLink: "https://apps.apple.com/jp/app/mapping/id1639823172")
                 }) {
                     HStack{
                         Image(systemName:"star.bubble").frame(width: 30)
@@ -104,7 +112,7 @@ struct SettingView: View {
             }.listStyle(GroupedListStyle()) // Listのスタイルを横に広げる
                 .navigationTitle(Text("設定"))
                 .foregroundColor(colorScheme == .dark ? .white : .black)
-        }
+        }.navigationViewStyle(.stack) // NavigationView
     }
 }
 

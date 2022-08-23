@@ -22,6 +22,7 @@
 		124F8AA7288979320015C589 /* FileController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 124F8AA6288979320015C589 /* FileController.swift */; };
 		12533BD32889FB1400E00556 /* MappingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12533BD22889FB1400E00556 /* MappingView.swift */; };
 		12533BD52889FC0300E00556 /* InputLocationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12533BD42889FC0300E00556 /* InputLocationView.swift */; };
+		1280DF2128AD0B95007C6D69 /* RouteLocationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1280DF2028AD0B95007C6D69 /* RouteLocationView.swift */; };
 		128FB33C2894192C00A15091 /* LocationModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 128FB33B2894192C00A15091 /* LocationModels.swift */; };
 		12DFFA7D28909346006C024A /* DetailLocationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12DFFA7C28909346006C024A /* DetailLocationView.swift */; };
 		85B17AE5AE30E4E36426C19D /* Pods_mapping.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B12552F734DEED1587BEAA76 /* Pods_mapping.framework */; };
@@ -45,6 +46,7 @@
 		124F8AA6288979320015C589 /* FileController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileController.swift; sourceTree = "<group>"; };
 		12533BD22889FB1400E00556 /* MappingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MappingView.swift; sourceTree = "<group>"; };
 		12533BD42889FC0300E00556 /* InputLocationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InputLocationView.swift; sourceTree = "<group>"; };
+		1280DF2028AD0B95007C6D69 /* RouteLocationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RouteLocationView.swift; sourceTree = "<group>"; };
 		128FB33B2894192C00A15091 /* LocationModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationModels.swift; sourceTree = "<group>"; };
 		12DFFA7C28909346006C024A /* DetailLocationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailLocationView.swift; sourceTree = "<group>"; };
 		B12552F734DEED1587BEAA76 /* Pods_mapping.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_mapping.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -90,6 +92,7 @@
 				124F8A92288964D30015C589 /* ContentView.swift */,
 				121F74FC289BFDE800A98196 /* SettingView.swift */,
 				12DFFA7C28909346006C024A /* DetailLocationView.swift */,
+				1280DF2028AD0B95007C6D69 /* RouteLocationView.swift */,
 				12533BD42889FC0300E00556 /* InputLocationView.swift */,
 				124CD5FA288EC386004E7968 /* SpotPickerView.swift */,
 				121EADDA288B7FAB00E748E9 /* RowLocationView.swift */,
@@ -276,6 +279,7 @@
 				121EADDD288B7FBF00E748E9 /* ListLocationView.swift in Sources */,
 				12DFFA7D28909346006C024A /* DetailLocationView.swift in Sources */,
 				128FB33C2894192C00A15091 /* LocationModels.swift in Sources */,
+				1280DF2128AD0B95007C6D69 /* RouteLocationView.swift in Sources */,
 				124F8A93288964D30015C589 /* ContentView.swift in Sources */,
 				121F74FD289BFDE800A98196 /* SettingView.swift in Sources */,
 				1228C285289B200A00044299 /* AdMobViewModels.swift in Sources */,
@@ -413,13 +417,13 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 6;
 				DEVELOPMENT_ASSET_PATHS = "\"mapping/Preview Content\"";
 				DEVELOPMENT_TEAM = CGD79LB65H;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = mapping/Info.plist;
-				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "現在地を表示するために位置情報を使います。";
+				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "「現在地の表示」「住所を取得して表示」「地図の表示位置の初期値」のために位置情報を使用します。";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -429,8 +433,8 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.ame.dev.mapping;
+				MARKETING_VERSION = 1.1;
+				PRODUCT_BUNDLE_IDENTIFIER = com.amefure.mapping;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
@@ -445,13 +449,13 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 6;
 				DEVELOPMENT_ASSET_PATHS = "\"mapping/Preview Content\"";
 				DEVELOPMENT_TEAM = CGD79LB65H;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = mapping/Info.plist;
-				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "現在地を表示するために位置情報を使います。";
+				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "「現在地の表示」「住所を取得して表示」「地図の表示位置の初期値」のために位置情報を使用します。";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -461,8 +465,8 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.ame.dev.mapping;
+				MARKETING_VERSION = 1.1;
+				PRODUCT_BUNDLE_IDENTIFIER = com.amefure.mapping;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;

@@ -52,14 +52,24 @@ struct DetailLocationView: View {
             
             VStack (alignment: .leading){
                 
-                Text(item.spot.rawValue)
-                    .font(.caption)
-                    .padding(5)
-                    .background(item.spot.spotColor)
-                    .cornerRadius(3)
-                    .foregroundColor(item.spot.accentColor)
-                    .offset(x: 0, y: -30)
-            
+                    HStack{
+                            Text(item.spot.rawValue).padding(5)
+                                    .background(item.spot.spotColor)
+                                    .cornerRadius(3)
+                                    .foregroundColor(item.spot.accentColor)
+                
+                            Spacer()
+                        
+                        NavigationLink(destination: RouteLocationView(item: item), label: {
+                            HStack(alignment: .center, spacing: 0){
+                            Text("Route")
+                            Image(systemName:"arrow.triangle.turn.up.right.circle")
+                        }}).padding(5)
+                            .background(item.spot.spotColor)
+                            .cornerRadius(3)
+                            .foregroundColor(item.spot.accentColor)
+                        
+                    }.font(.system(size: 15)) // HStack
                 
                 VStack(alignment: .leading){
                     Text(item.name)
@@ -68,7 +78,7 @@ struct DetailLocationView: View {
                         .foregroundColor(item.spot.spotColor)
                         .frame(height: 2)
                         .offset(x: 0, y: -5)
-                }.offset(x: 0, y: -20)
+                } // VStack(alignment: .leading)
                 
                 Spacer() // 名称-----------------------------
                 

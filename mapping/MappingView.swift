@@ -25,12 +25,12 @@ struct MappingView: View {
             Map(coordinateRegion: $locationManager.region,
                 annotationItems: allLocation.allData,
                 annotationContent: { point in MapAnnotation(coordinate: point.coordinate, content: {
-                
+
                 NavigationLink(destination: {
                     DetailLocationView(item: point)
                 }, label: {
                     VStack{
-                        
+
                         Image(systemName: point.spot.spotImage)
                             .foregroundColor(point.spot.accentColor)
                             .frame(width: 30, height: 30)
@@ -39,7 +39,6 @@ struct MappingView: View {
                         Text(point.name).foregroundColor(colorScheme == .dark ? .white : .black)
                     }
                 })
-                
             })
             }
             ).navigationBarHidden(true) // Map
@@ -47,14 +46,12 @@ struct MappingView: View {
                     ToolbarItem(placement: .bottomBar, content: {
                         // バナー広告
                         AdMobBannerView().frame(width: deviceWidth, height: 40)
-                        
                     })
                 }
                 .onChange(of: isClick, perform: { value in
                     locationManager.reloadRegion()
                 })
-    
-        } // NavigationView
+        }.navigationViewStyle(.stack) // NavigationView
     }
 }
 

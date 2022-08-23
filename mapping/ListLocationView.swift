@@ -65,7 +65,7 @@ struct ListLocationView: View {
                     AdMobBannerView().frame(width: deviceWidth, height: 40)
                 }
             } //  ZStack
-        }  // NavigationView
+        } .navigationViewStyle(.stack) // NavigationView
     }
 }
 
