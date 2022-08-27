@@ -21,10 +21,22 @@ struct SettingView: View {
     
     @State var isModal:Bool = false    // InputLocationView表示/非表示
     @State var isAlert:Bool = false    // 全データ削除ボタンの確認アラート
+    @State var isAlertReward:Bool = false    // リワード広告視聴回数制限アラート
     
+    @AppStorage("LastAcquisitionDate") var lastAcquisitionDate = "" // 参照：UserDefaults.standard.integer(forKey: "launchedCount")
+    
+    func nowTime() -> String{
+            let df = DateFormatter()
+            df.calendar = Calendar(identifier: .gregorian)
+            df.locale = Locale(identifier: "ja_JP")
+            df.timeZone = TimeZone(identifier: "Asia/Tokyo")
+            df.dateStyle = .short
+            df.timeStyle = .none
+            return df.string(from: Date())
+    }
     // シェアボタン
-    func shareApp(shareText: String, shareImage: Image, shareLink: String) {
-        let items = [shareText, shareImage, URL(string: shareLink)!] as [Any]
+    func shareApp(shareText: String, shareLink: String) {
+        let items = [shareText, URL(string: shareLink)!] as [Any]
         let activityVC = UIActivityViewController(activityItems: items, applicationActivities: nil)
         if UIDevice.current.userInterfaceIdiom == .pad {
             let deviceSize = UIScreen.main.bounds
@@ -45,9 +57,15 @@ struct SettingView: View {
                 
                 // 1:容量追加
                 Button(action: {
-                    reward.showReward()
-                    fileController.addLimitTxt()
-                    
+                    // 1日1回までしか視聴できないようにする
+                    if lastAcquisitionDate != nowTime() {
+                        reward.showReward()          //  広告配信
+                        fileController.addLimitTxt() // 報酬獲得
+                        lastAcquisitionDate = nowTime() // 最終視聴日を格納
+                        
+                    }else{
+                        isAlertReward = true
+                    }
                 }) {
                     HStack{
                         Image(systemName:"bag.badge.plus").frame(width: 30)
@@ -60,6 +78,12 @@ struct SettingView: View {
                     reward.loadReward()
                 }
                 .disabled(!reward.rewardLoaded)
+                .alert(isPresented: $isAlertReward){
+                    Alert(title:Text("お知らせ"),
+                          message: Text("広告を視聴できるのは1日に1回までです"),
+                          dismissButton: .default(Text("OK"),
+                          action: {}))
+                }
                 // 1:容量追加
                 
                 
@@ -76,7 +100,7 @@ struct SettingView: View {
                 
                 // 3:シェアボタン
                 Button(action: {
-                    shareApp(shareText: "mappingというアプリを使ってみてね♪", shareImage: Image(systemName: "globe.asia.australia"), shareLink: "https://apps.apple.com/jp/app/mapping/id1639823172")
+                    shareApp(shareText: "mappingというアプリを使ってみてね♪", shareLink: "https://apps.apple.com/jp/app/mapping/id1639823172")
                 }) {
                     HStack{
                         Image(systemName:"star.bubble").frame(width: 30)

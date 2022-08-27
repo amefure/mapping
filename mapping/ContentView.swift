@@ -59,7 +59,7 @@ struct ContentView: View {
                 // -----------------------------------------------------
                 
                 // 2.アノテーション配置View
-                MappingView(isClick: $isClickUpdate).tabItem({
+                MappingView(isClick: $isClickUpdate,selectedSpot: $selectedSpot,filter: $filter,selectedTag: $selectedTag).tabItem({
                     Image(systemName: "globe.asia.australia.fill")
                     Text("Map")}).tag(2).environmentObject(allLocation)
                 // -----------------------------------------------------

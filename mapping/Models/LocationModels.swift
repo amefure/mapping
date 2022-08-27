@@ -44,14 +44,16 @@ enum Spot:String,  Codable ,Identifiable ,CaseIterable{
     case workplace  = "仕事場" // 仕事場
     case leisure = "レジャー"  // レジャー
     case nature = "自然"      // 自然
+    case gas = "ガソリンスタンド"// ガソリンスタンド
     case parking = "駐車場"   // 駐車場
+    case hospital = "病院"    // 病院
     case others = "その他"    // その他
     
     var spotColor: Color{
         switch self {
         case .house:
             // Giant's Club : 赤
-            return Color( red: 182/255, green: 95/255, blue: 77/255, opacity: 1)
+            return Color( red: 179/255, green: 75/255, blue: 75/255, opacity: 1)
         case .restaurant:
             // Metallic Orange : 橙
             return Color( red: 232/255, green: 106/255, blue: 15/255, opacity: 1)
@@ -70,9 +72,15 @@ enum Spot:String,  Codable ,Identifiable ,CaseIterable{
         case .nature:
             // Slimy Green : 緑
             return Color( red: 79/255, green: 182/255, blue: 77/255, opacity: 1)
+        case .gas:
+            // 黄緑
+            return Color( red: 164/255, green: 179/255, blue: 75/255, opacity: 1)
         case .parking:
             // Green Sheen : 水色
             return Color( red: 110/255, green: 168/255, blue: 158/255, opacity: 1)
+        case .hospital:
+            // White：白
+            return Color( red: 200/255, green: 200/255, blue: 200/255, opacity: 1)
         case .others:
             // : 薄ピンク
             return Color( red: 182/255, green: 77/255, blue: 134/255, opacity: 1)
@@ -82,8 +90,8 @@ enum Spot:String,  Codable ,Identifiable ,CaseIterable{
     
     var accentColor: Color {
         switch self {
-        case .house,.restaurant,.workplace,.facility, .leisure,.nature,.parking,.others : return .white
-        case  .shop : return .black
+        case .house,.restaurant,.workplace,.facility, .leisure,.nature,.gas,.parking,.others : return .white
+        case  .shop,.hospital : return .black
         }
        }
     
@@ -104,8 +112,12 @@ enum Spot:String,  Codable ,Identifiable ,CaseIterable{
             return "person.3"
         case .nature:
             return "leaf"
+        case .gas:
+            return "fuelpump"
         case .parking:
             return "car"
+        case .hospital:
+            return "cross.fill"
         case .others:
             return "mappin"
         }

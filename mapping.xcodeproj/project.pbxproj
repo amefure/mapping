@@ -22,6 +22,7 @@
 		124F8AA7288979320015C589 /* FileController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 124F8AA6288979320015C589 /* FileController.swift */; };
 		12533BD32889FB1400E00556 /* MappingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12533BD22889FB1400E00556 /* MappingView.swift */; };
 		12533BD52889FC0300E00556 /* InputLocationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12533BD42889FC0300E00556 /* InputLocationView.swift */; };
+		1277D7C128B9082F00251B4D /* UIMapModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1277D7C028B9082F00251B4D /* UIMapModels.swift */; };
 		1280DF2128AD0B95007C6D69 /* RouteLocationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1280DF2028AD0B95007C6D69 /* RouteLocationView.swift */; };
 		128FB33C2894192C00A15091 /* LocationModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 128FB33B2894192C00A15091 /* LocationModels.swift */; };
 		12DFFA7D28909346006C024A /* DetailLocationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12DFFA7C28909346006C024A /* DetailLocationView.swift */; };
@@ -46,6 +47,7 @@
 		124F8AA6288979320015C589 /* FileController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileController.swift; sourceTree = "<group>"; };
 		12533BD22889FB1400E00556 /* MappingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MappingView.swift; sourceTree = "<group>"; };
 		12533BD42889FC0300E00556 /* InputLocationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InputLocationView.swift; sourceTree = "<group>"; };
+		1277D7C028B9082F00251B4D /* UIMapModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIMapModels.swift; sourceTree = "<group>"; };
 		1280DF2028AD0B95007C6D69 /* RouteLocationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RouteLocationView.swift; sourceTree = "<group>"; };
 		128FB33B2894192C00A15091 /* LocationModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationModels.swift; sourceTree = "<group>"; };
 		12DFFA7C28909346006C024A /* DetailLocationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailLocationView.swift; sourceTree = "<group>"; };
@@ -121,6 +123,7 @@
 			children = (
 				128FB33B2894192C00A15091 /* LocationModels.swift */,
 				124F8AA1288967EB0015C589 /* MapModels.swift */,
+				1277D7C028B9082F00251B4D /* UIMapModels.swift */,
 				1228C284289B200A00044299 /* AdMobViewModels.swift */,
 			);
 			path = Models;
@@ -284,6 +287,7 @@
 				121F74FD289BFDE800A98196 /* SettingView.swift in Sources */,
 				1228C285289B200A00044299 /* AdMobViewModels.swift in Sources */,
 				124F8AA7288979320015C589 /* FileController.swift in Sources */,
+				1277D7C128B9082F00251B4D /* UIMapModels.swift in Sources */,
 				124CD5FB288EC386004E7968 /* SpotPickerView.swift in Sources */,
 				124CD5FD288F4835004E7968 /* HeaderView.swift in Sources */,
 				12533BD32889FB1400E00556 /* MappingView.swift in Sources */,
@@ -417,7 +421,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 6;
+				CURRENT_PROJECT_VERSION = 8;
 				DEVELOPMENT_ASSET_PATHS = "\"mapping/Preview Content\"";
 				DEVELOPMENT_TEAM = CGD79LB65H;
 				ENABLE_PREVIEWS = YES;
@@ -433,7 +437,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.1;
+				MARKETING_VERSION = 1.3;
 				PRODUCT_BUNDLE_IDENTIFIER = com.amefure.mapping;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
@@ -449,7 +453,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 6;
+				CURRENT_PROJECT_VERSION = 8;
 				DEVELOPMENT_ASSET_PATHS = "\"mapping/Preview Content\"";
 				DEVELOPMENT_TEAM = CGD79LB65H;
 				ENABLE_PREVIEWS = YES;
@@ -465,7 +469,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.1;
+				MARKETING_VERSION = 1.3;
 				PRODUCT_BUNDLE_IDENTIFIER = com.amefure.mapping;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;

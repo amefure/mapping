@@ -102,7 +102,7 @@ struct HeaderView: View {
             })
             .alert(isPresented: $isLimitAlert){
                 Alert(title:Text("上限に達しました"),
-                      message: Text("広告を見てSpotの枠を増やしてください。"),
+                      message: Text("広告を視聴すると\nSpotの枠を増やすことができます。"),
                       dismissButton: .default(Text("OK")))
             }
     }

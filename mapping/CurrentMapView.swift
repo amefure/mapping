@@ -25,26 +25,14 @@ struct CurrentMapView: View {
     let deviceHeight = UIScreen.main.bounds.height
     
     @State var annotationItem:[Location] = []
-    
-    // 現在地のアノテーションを格納処理
-    func setAnnotation(){
-        self.annotationItem = [Location(address: "", name: "現在地", memo: "", spot: .others, latitude: locationManager.region.center.latitude, longitude: locationManager.region.center.longitude)]
-    }
+    @State var tapAddress:String = ""
     
     var body: some View {
         NavigationView{
             VStack {
                 ZStack{
                     // セクション1-----------------------------------------
-                    Map(coordinateRegion: $locationManager.region,
-                        annotationItems: annotationItem,
-                        annotationContent: { point in MapAnnotation(coordinate: point.coordinate, content: {
-                                VStack{
-                                    Circle().fill(Color.white).frame(width: 25, height: 25)
-                                    Circle().fill(Color("ThemaColor")).frame(width: 18, height: 18).opacity(0.8).offset(x: 0, y: -30)
-                                }
-                        })}
-                    )
+                    UIMapAddressGetView(tapAddress:$tapAddress)
                     // セクション1-----------------------------------------
                     
                     // セクション2---------------------------------------
@@ -70,7 +58,7 @@ struct CurrentMapView: View {
                         if(isPreview){
                             HStack {
                                 Spacer()
-                                Text((locationManager.address != "" ?  locationManager.address : "位置情報をONにしてください" ) ?? "取得できないエリアです…")
+                                Text((locationManager.address != "" ?  (tapAddress != "" ? tapAddress : locationManager.address) : "位置情報をONにしてください" ) ?? "取得できないエリアです…")
                                     .font(.system(size: 20))
                                     .textSelection(.enabled)
                                 
@@ -86,7 +74,7 @@ struct CurrentMapView: View {
                                             .offset(x: -5, y: -24)
                                     }
                                     Button(action: {
-                                        UIPasteboard.general.string = locationManager.address
+                                        UIPasteboard.general.string = (tapAddress != "" ? tapAddress : locationManager.address)
                                         messageBalloon.isPreview = true
                                         messageBalloon.vanishMessage()
                                     }, label: {
@@ -97,7 +85,8 @@ struct CurrentMapView: View {
                             } // HStack
                             
                         }else{ //  if(isPreview)
-                            Text("現在地は…？")
+                            
+                            Text((tapAddress != "" ? "選択した住所は...?" : "現在地は...?"))
                                 .font(.system(size: 20))
                                 .textSelection(.enabled)
                         }
@@ -119,15 +108,11 @@ struct CurrentMapView: View {
                     AdMobBannerView().frame(width: deviceWidth, height: 40)
                 })
             }
-            .onChange(of: isClick, perform: { value in
+            .onChange(of: isClick, perform: { _ in
                 // Headerボタンクリック時の処理
                 locationManager.reloadRegion()
-                setAnnotation()
+                tapAddress = "" // タップアドレスを空にする
             })
-            .onAppear(){
-                // 画面表示時にアノテーションを表示
-                setAnnotation()
-            }
         } // NavigationView
         .navigationViewStyle(.stack)
     }

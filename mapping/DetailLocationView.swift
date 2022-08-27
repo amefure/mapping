@@ -29,6 +29,9 @@ struct DetailLocationView: View {
     // InputLocationView表示/非表示
     @State var isModal:Bool = false
     
+    @Binding var selectedSpot:Spot? // フィルタリングされるSpot
+    @Binding var filter:Bool        // フィルターのON/OFF
+    @Binding var selectedTag:Int    // Content > mapView > Detail のみリストに画面遷移させるため
     
     var fileController = FileController()
     
@@ -53,10 +56,26 @@ struct DetailLocationView: View {
             VStack (alignment: .leading){
                 
                     HStack{
+                        Button(action: {
+                            // カテゴリボタン押下でカテゴリフィルタリング実行
+                            selectedSpot = item.spot
+                            filter = true
+                            dismiss() // Navigationを戻す
+                            // MapViewからの遷移に限りListへ強制遷移 遅延処理でdismissの実行を待つ
+                            DispatchQueue.main.asyncAfter(deadline: .now() + 0.01) {
+                                if selectedTag != 0 {
+                                    selectedTag = 1
+                                }
+                            }
+                            
+                            
+                        }, label: {
                             Text(item.spot.rawValue).padding(5)
                                     .background(item.spot.spotColor)
                                     .cornerRadius(3)
                                     .foregroundColor(item.spot.accentColor)
+                        })
+                            
                 
                             Spacer()
                         
@@ -164,6 +183,6 @@ struct DetailLocationView: View {
 
 struct DetailLocationView_Previews: PreviewProvider {
     static var previews: some View {
-        DetailLocationView(item: Location(address: "東京都千代田区千代田１−１", name: "東京スカイツリー", memo: "良い場所", spot: .facility, latitude: 35.709152712026265, longitude: 139.80771829999996)).previewLayout(.sizeThatFits)
+        DetailLocationView(item: Location(address: "東京都千代田区千代田１−１", name: "東京スカイツリー", memo: "良い場所", spot: .facility, latitude: 35.709152712026265, longitude: 139.80771829999996),selectedSpot: Binding.constant(.house),filter: Binding.constant(false),selectedTag: Binding.constant(1)).previewLayout(.sizeThatFits)
     }
 }

@@ -15,9 +15,13 @@ struct RowLocationView: View {
     // ListLocationViewから引数として受け取ったLocation情報
     @State var item:Location
     
+    @Binding var selectedSpot:Spot? // フィルタリングされるSpot
+    @Binding var filter:Bool        // フィルターのON/OFF
+    @State var demoTag:Int = 0 // 存在しないタグをdetailに渡す mapViewからListへ飛ばす用
+    
     var body: some View {
 
-        NavigationLink(destination: {DetailLocationView(item: item).environmentObject(allLocation)}, label: {
+        NavigationLink(destination: {DetailLocationView(item: item,selectedSpot: $selectedSpot,filter: $filter,selectedTag:$demoTag).environmentObject(allLocation)}, label: {
             VStack(alignment:.leading) {
                 
                 Text(item.name).font(.system(size: 20))
@@ -36,6 +40,6 @@ struct RowLocationView: View {
 
 struct RowLocationView_Previews: PreviewProvider {
     static var previews: some View {
-        RowLocationView(item: Location(address: "東京都千代田区千代田１−１", name: "東京スカイツリー", memo: "良い場所", spot: .facility, latitude: 35.709152712026265, longitude: 139.80771829999996)).previewLayout(.sizeThatFits)
+        RowLocationView(item: Location(address: "東京都千代田区千代田１−１", name: "東京スカイツリー", memo: "良い場所", spot: .facility, latitude: 35.709152712026265, longitude: 139.80771829999996),selectedSpot: Binding.constant(.house),filter: Binding.constant(false)).previewLayout(.sizeThatFits)
     }
 }

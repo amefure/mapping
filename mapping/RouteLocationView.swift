@@ -15,7 +15,7 @@ struct RouteLocationView: View {
     @ObservedObject var locationManager = LocationManager()
     
     @State var expectedTravelTime:Double = -1  // 所要時間
-    @State var distance: Double = 0            // 距離数
+    @State var distance: Double = 0            // 距離数 -1が格納されている場合は経路探索失敗MapModelsより
     
     func formatTime(_ time:Double) -> String{
         // 1分以下
@@ -43,7 +43,7 @@ struct RouteLocationView: View {
                 Spacer()
                 Image(systemName:"clock")
                 Spacer()
-                Text("\(formatTime(expectedTravelTime))").frame(width: 200)
+                Text(distance != -1 ? "\(formatTime(expectedTravelTime))": "Sorry....").frame(width: 200)
                 Spacer()
 
             }
@@ -51,11 +51,11 @@ struct RouteLocationView: View {
                 Spacer()
                 Image(systemName:"arrow.triangle.turn.up.right.circle")
                 Spacer()
-                Text(String(format: "%.1fkm", distance/1000)).frame(width: 200)
+                Text(distance != -1 ? String(format: "%.1fkm", distance/1000) : "経路案内できない地域です").frame(width: 200)
                 Spacer()
 
             }
-            UIMapView(region: locationManager.region, location: item,expectedTravelTime: $expectedTravelTime,distance: $distance)
+            UIMapRouteView(region: locationManager.region, location: item,expectedTravelTime: $expectedTravelTime,distance: $distance)
         }
     }
 }

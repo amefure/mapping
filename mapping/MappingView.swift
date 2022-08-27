@@ -18,6 +18,10 @@ struct MappingView: View {
     @ObservedObject var locationManager = LocationManager()
     @Binding var isClick:Bool         // フィルターボタンを押されたかによってListLocationViewのNavigationLinkを操作
     
+    @Binding var selectedSpot:Spot? // フィルタリングされるSpot
+    @Binding var filter:Bool        // フィルターのON/OFF
+    @Binding var selectedTag:Int      // 現在選択されているタグを共有
+    
     let deviceWidth = UIScreen.main.bounds.width
     
     var body: some View {
@@ -27,7 +31,7 @@ struct MappingView: View {
                 annotationContent: { point in MapAnnotation(coordinate: point.coordinate, content: {
 
                 NavigationLink(destination: {
-                    DetailLocationView(item: point)
+                    DetailLocationView(item: point,selectedSpot: $selectedSpot,filter: $filter,selectedTag:$selectedTag)
                 }, label: {
                     VStack{
 
@@ -58,6 +62,6 @@ struct MappingView: View {
 
 struct MappingView_Previews: PreviewProvider {
     static var previews: some View {
-        MappingView(isClick: Binding.constant(true))
+        MappingView(isClick: Binding.constant(true),selectedSpot: Binding.constant(.house),filter: Binding.constant(false),selectedTag: Binding.constant(1))
     }
 }

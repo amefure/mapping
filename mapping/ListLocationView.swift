@@ -36,10 +36,22 @@ struct ListLocationView: View {
                 
                 
                 VStack{
+                    // フィルター時にカテゴリ表示
+                    if filter && selectedSpot != nil{
+                        HStack{
+                            Text(selectedSpot!.rawValue)
+                            Image(systemName:selectedSpot!.spotImage)
+                        }.padding()
+                            .foregroundColor(selectedSpot!.spotColor)
+                        Image(systemName: "chevron.down")
+                            .padding(.bottom,10)
+                            .foregroundColor(selectedSpot!.spotColor)
+                    }
+                    
                     
                     List(allLocation.allData.reversed().filter(filter ? { $0.spot == selectedSpot } : { $0.name != "" })) { item in
                         
-                        RowLocationView(item: item).environmentObject(allLocation)
+                        RowLocationView(item: item,selectedSpot: $selectedSpot,filter: $filter).environmentObject(allLocation)
                             .listRowBackground(Color.clear)
                         // スワイプアクションを追加
                             .swipeActions(edge: .trailing, allowsFullSwipe: false){
