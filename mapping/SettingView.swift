@@ -39,11 +39,12 @@ struct SettingView: View {
         let items = [shareText, URL(string: shareLink)!] as [Any]
         let activityVC = UIActivityViewController(activityItems: items, applicationActivities: nil)
         if UIDevice.current.userInterfaceIdiom == .pad {
-            let deviceSize = UIScreen.main.bounds
+//            let deviceSize = UIScreen.main.bounds
             if let popPC = activityVC.popoverPresentationController {
                     popPC.sourceView = activityVC.view
                     popPC.barButtonItem = .none
-                    popPC.sourceRect = CGRect(x:deviceSize.size.width/2, y: deviceSize.size.height, width: 0, height: 0)
+//                 popPC.sourceRect = CGRect(x:deviceSize.size.width/2, y: deviceSize.size.height, width: 0, height: 0)
+                popPC.sourceRect = activityVC.accessibilityFrame
             }
         }
         let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene
@@ -53,88 +54,92 @@ struct SettingView: View {
     
     var body: some View {
         NavigationView{
-            List{
+            List {
                 
+        
+                Section(header: Text("設定"), footer: Text("※追加される容量は5個です。")) {
+                    // 1:容量追加
+                    Button(action: {
+                        // 1日1回までしか視聴できないようにする
+                        if lastAcquisitionDate != nowTime() {
+                            reward.showReward()          //  広告配信
+                            fileController.addLimitTxt() // 報酬獲得
+                            lastAcquisitionDate = nowTime() // 最終視聴日を格納
+                            
+                        }else{
+                            isAlertReward = true
+                        }
+                    }) {
+                        HStack{
+                            Image(systemName:"bag.badge.plus").frame(width: 30)
+                            Text("広告を見て保存容量(※)を追加する")
+                            Spacer()
+                            Text("Spot:\(fileController.loadLimitTxt())")
+                        }
+                    }
+                    .onAppear() {
+                        reward.loadReward()
+                    }
+                    .disabled(!reward.rewardLoaded)
+                    .alert(isPresented: $isAlertReward){
+                        Alert(title:Text("お知らせ"),
+                              message: Text("広告を視聴できるのは1日に1回までです"),
+                              dismissButton: .default(Text("OK"),
+                              action: {}))
+                    }
+                }
+            
                 // 1:容量追加
-                Button(action: {
-                    // 1日1回までしか視聴できないようにする
-                    if lastAcquisitionDate != nowTime() {
-                        reward.showReward()          //  広告配信
-                        fileController.addLimitTxt() // 報酬獲得
-                        lastAcquisitionDate = nowTime() // 最終視聴日を格納
+                
+                Section {
+                    // 2:利用規約とプライバシーポリシー
+                    Link(destination:URL.init(string: "https://ame.hp.peraichi.com/")!, label: {
+                        HStack{
+                            Image(systemName:"note.text").frame(width: 30)
+                            Text("利用規約とプライバシーポリシー")
+                            Image(systemName:"link").font(.caption)
+                        }
+                    })
+                    // 2:プライバシーポリシー
+                    
+                    
+                    // 3:シェアボタン
+                    Button(action: {
+                        shareApp(shareText: "mappingというアプリを使ってみてね♪", shareLink: "https://apps.apple.com/jp/app/mapping/id1639823172")
+                    }) {
+                        HStack{
+                            Image(systemName:"star.bubble").frame(width: 30)
+                            Text("シェアする")
+                        }
+                    }
+                    // 3:シェアボタン
+                    
+                    
+                    
+                    // 4:全データ削除ボタン-----------------------------
+                    Button(action: {
+                        isAlert = true
                         
-                    }else{
-                        isAlertReward = true
+                    }, label: {
+                        HStack {
+                            Image(systemName: "trash.fill").frame(width: 30)
+                            Text("全てのデータを削除する")
+                        }.foregroundColor(.accentColor)
+                        
+                    })
+                    .alert(isPresented: $isAlert){
+                        Alert(title:Text("確認"),
+                              message: Text("「全てのデータ」がリセットされます。\nよろしいですか？"),
+                              primaryButton: .destructive(Text("削除する"),
+                                                          action: {
+                            fileController.clearFile()
+                            allLocation.setAllData()
+                        }), secondaryButton: .cancel(Text("キャンセル")))
                     }
-                }) {
-                    HStack{
-                        Image(systemName:"bag.badge.plus").frame(width: 30)
-                        Text("広告を見て保存容量を追加する")
-                        Spacer()
-                        Text("Spot:\(fileController.loadLimitTxt())")
-                    }
+                    // 4:全データ削除ボタン-----------------------------
                 }
-                .onAppear() {
-                    reward.loadReward()
-                }
-                .disabled(!reward.rewardLoaded)
-                .alert(isPresented: $isAlertReward){
-                    Alert(title:Text("お知らせ"),
-                          message: Text("広告を視聴できるのは1日に1回までです"),
-                          dismissButton: .default(Text("OK"),
-                          action: {}))
-                }
-                // 1:容量追加
-                
-                
-                // 2:利用規約とプライバシーポリシー
-                Link(destination:URL.init(string: "https://ame.hp.peraichi.com/")!, label: {
-                    HStack{
-                        Image(systemName:"note.text").frame(width: 30)
-                        Text("利用規約とプライバシーポリシー")
-                        Image(systemName:"link").font(.caption)
-                    }
-                })
-                // 2:プライバシーポリシー
-                
-                
-                // 3:シェアボタン
-                Button(action: {
-                    shareApp(shareText: "mappingというアプリを使ってみてね♪", shareLink: "https://apps.apple.com/jp/app/mapping/id1639823172")
-                }) {
-                    HStack{
-                        Image(systemName:"star.bubble").frame(width: 30)
-                        Text("シェアする")
-                    }
-                }
-                // 3:シェアボタン
-                
-                
-                
-                // 4:全データ削除ボタン-----------------------------
-                Button(action: {
-                    isAlert = true
-                    
-                }, label: {
-                    HStack {
-                        Image(systemName: "trash.fill").frame(width: 30)
-                        Text("全てのデータを削除する")
-                    }.foregroundColor(.accentColor)
-                    
-                })
-                .alert(isPresented: $isAlert){
-                    Alert(title:Text("確認"),
-                          message: Text("「全てのデータ」がリセットされます。\nよろしいですか？"),
-                          primaryButton: .destructive(Text("削除する"),
-                                                      action: {
-                        fileController.clearFile()
-                        allLocation.setAllData()
-                    }), secondaryButton: .cancel(Text("キャンセル")))
-                }
-                // 4:全データ削除ボタン-----------------------------
                 
             }.listStyle(GroupedListStyle()) // Listのスタイルを横に広げる
-                .navigationTitle(Text("設定"))
                 .foregroundColor(colorScheme == .dark ? .white : .black)
         }.navigationViewStyle(.stack) // NavigationView
     }

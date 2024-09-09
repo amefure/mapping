@@ -23,6 +23,7 @@
 		12533BD32889FB1400E00556 /* MappingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12533BD22889FB1400E00556 /* MappingView.swift */; };
 		12533BD52889FC0300E00556 /* InputLocationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12533BD42889FC0300E00556 /* InputLocationView.swift */; };
 		1277D7C128B9082F00251B4D /* UIMapModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1277D7C028B9082F00251B4D /* UIMapModels.swift */; };
+		1279A9E52C8F0D6B00A4AC3B /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = 1279A9E42C8F0D6B00A4AC3B /* PrivacyInfo.xcprivacy */; };
 		1280DF2128AD0B95007C6D69 /* RouteLocationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1280DF2028AD0B95007C6D69 /* RouteLocationView.swift */; };
 		128FB33C2894192C00A15091 /* LocationModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 128FB33B2894192C00A15091 /* LocationModels.swift */; };
 		12DFFA7D28909346006C024A /* DetailLocationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12DFFA7C28909346006C024A /* DetailLocationView.swift */; };
@@ -48,6 +49,7 @@
 		12533BD22889FB1400E00556 /* MappingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MappingView.swift; sourceTree = "<group>"; };
 		12533BD42889FC0300E00556 /* InputLocationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InputLocationView.swift; sourceTree = "<group>"; };
 		1277D7C028B9082F00251B4D /* UIMapModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIMapModels.swift; sourceTree = "<group>"; };
+		1279A9E42C8F0D6B00A4AC3B /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = PrivacyInfo.xcprivacy; sourceTree = "<group>"; };
 		1280DF2028AD0B95007C6D69 /* RouteLocationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RouteLocationView.swift; sourceTree = "<group>"; };
 		128FB33B2894192C00A15091 /* LocationModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationModels.swift; sourceTree = "<group>"; };
 		12DFFA7C28909346006C024A /* DetailLocationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailLocationView.swift; sourceTree = "<group>"; };
@@ -90,6 +92,7 @@
 			isa = PBXGroup;
 			children = (
 				1228C283289B1F7200044299 /* Info.plist */,
+				1279A9E42C8F0D6B00A4AC3B /* PrivacyInfo.xcprivacy */,
 				124F8A90288964D30015C589 /* mappingApp.swift */,
 				124F8A92288964D30015C589 /* ContentView.swift */,
 				121F74FC289BFDE800A98196 /* SettingView.swift */,
@@ -223,6 +226,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1279A9E52C8F0D6B00A4AC3B /* PrivacyInfo.xcprivacy in Resources */,
 				124F8A98288964D40015C589 /* Preview Assets.xcassets in Resources */,
 				124F8A95288964D40015C589 /* Assets.xcassets in Resources */,
 			);
@@ -421,7 +425,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 8;
+				CURRENT_PROJECT_VERSION = 12;
 				DEVELOPMENT_ASSET_PATHS = "\"mapping/Preview Content\"";
 				DEVELOPMENT_TEAM = CGD79LB65H;
 				ENABLE_PREVIEWS = YES;
@@ -431,13 +435,13 @@
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.3;
+				MARKETING_VERSION = 1.6.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.amefure.mapping;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
@@ -453,7 +457,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 8;
+				CURRENT_PROJECT_VERSION = 12;
 				DEVELOPMENT_ASSET_PATHS = "\"mapping/Preview Content\"";
 				DEVELOPMENT_TEAM = CGD79LB65H;
 				ENABLE_PREVIEWS = YES;
@@ -463,13 +467,13 @@
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.3;
+				MARKETING_VERSION = 1.6.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.amefure.mapping;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
